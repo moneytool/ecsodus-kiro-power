@@ -1,0 +1,25 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ecsodus",
+  "version": "1.0.0",
+  "description": "Migrate AWS Copilot CLI apps to Terraform in place, without deleting production: read-only assessment, Terraform import blocks, retain patches and a gated runbook.",
+  "author": {
+    "name": "Vamshidher Reddy Jannapu Reddy",
+    "url": "https://github.com/moneytool"
+  },
+  "keywords": [
+    "aws copilot",
+    "copilot cli",
+    "copilot migration",
+    "migrate copilot",
+    "copilot to terraform",
+    "copilot end of support",
+    "copilot deprecated",
+    "ecsodus",
+    "ecs terraform import",
+    "cloudformation to terraform"
+  ],
+  "homepage": "https://moneytool.github.io/ecsodus/",
+  "repository": "https://github.com/moneytool/ecsodus-kiro-power",
+  "license": "Apache-2.0"
+}
