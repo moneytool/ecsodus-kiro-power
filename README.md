@@ -31,6 +31,10 @@ Then ask Kiro something like: "Assess my AWS Copilot app `myapp` in us-east-1 fo
 
 ecsodus is alpha (v0.1). It supports Load Balanced Web Services and Backend Services, their environment, and Aurora/RDS, DynamoDB and S3 addons; other workload types are detected and reported as blocked. It passed a real AWS end-to-end run on 2026-09-30 ([report](https://github.com/moneytool/ecsodus/blob/main/docs/e2e/2026-09-30-aws-e2e.md)). See the [verified scope](https://github.com/moneytool/ecsodus/blob/main/docs/STATUS.md) before using it on production.
 
+## Tested
+
+Tested in Kiro IDE 1.2.37 on 2026-10-07: the power installs from GitHub, activates on Copilot deletion requests, refuses an unsafe `copilot app delete`, and explains the teardown traps correctly. Full results, failures found along the way, and screenshots: [TESTING.md](TESTING.md).
+
 ## Privacy
 
 This power collects no data. ecsodus runs locally on your machine, talks only to your AWS account with your credentials, and sends nothing to the author. See [PRIVACY.md](PRIVACY.md).
