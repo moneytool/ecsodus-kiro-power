@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "ecsodus",
-  "version": "1.0.3",
-  "description": "Migrate AWS Copilot CLI apps to Terraform in place, without deleting production: read-only assessment, Terraform import blocks, retain patches and a gated runbook.",
+  "version": "1.0.4",
+  "description": "Migrate AWS Copilot CLI apps to Terraform in place, without deleting production. Activate this power before any Copilot stack deletion (copilot app/env/svc delete or deleting Copilot CloudFormation stacks): a plain delete destroys certificates, DNS records, load balancers, EFS and databases. Read-only assessment, Terraform import blocks, retain patches and a gated runbook.",
   "author": {
     "name": "Vamshidher Reddy Jannapu Reddy",
     "url": "https://github.com/moneytool"
