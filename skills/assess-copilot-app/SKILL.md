@@ -30,7 +30,15 @@ ecsodus only calls `Describe`, `List`, `Get` and `Lookup` AWS APIs, and never re
     - for each stack, what a plain stack delete **without** retain patches would destroy,
     - every workload marked blocked, with the reason the report gives,
     - the zero-risk baseline the report starts with (keep the CloudFormation).
-6. Explain the teardown traps in plain words, using `references/copilot-teardown-traps.md`. Never suggest deleting a Copilot stack, running `copilot app delete`, `copilot env delete` or `copilot svc delete`, or using `--retain-resources` as a shortcut.
+6. Explain the teardown traps in plain words. Use exactly these four facts (details in `references/copilot-teardown-traps.md`), and do not add resource types or claims that aren't in them or in `REPORT.md`:
+    1. **Custom-resource Delete handlers.** Copilot deploys Lambda-backed custom resources; when their stack is deleted they delete the ACM certificate and its DNS validation records, every Route 53 alias record for the app's custom domains, and the NS delegation record, and they empty the ELB access-logs bucket. Importing those resources into Terraform first does not stop this.
+    2. **The env-controller.** Each service stack has an `EnvControllerAction` custom resource. Deleting the last service that needs a shared feature makes it update the environment stack and remove the shared ALB, the NAT gateways or the EFS file system.
+    3. **Unprotected addons.** Aurora/RDS, DynamoDB and S3 addons live in a nested stack with no `DeletionPolicy`, so deleting the parent stack deletes the data.
+    4. **`aws cloudformation delete-stack --retain-resources` doesn't help.** It only works on stacks already in `DELETE_FAILED`.
+
+    The safe pattern is: retain-patch every resource in every stack (policy-only change sets), import into Terraform, then delete the stacks.
+
+    Never suggest deleting a Copilot stack, running `copilot app delete`, `copilot env delete` or `copilot svc delete`, or using `--retain-resources` as a shortcut. If the user asks for any of these, say no, explain the traps above, and offer the safe pattern instead.
 7. If the user wants to proceed, hand over to the `migrate-copilot-to-terraform` skill.
 
 `inventory.json` and `REPORT.md` contain account IDs, resource names and task-definition environment values. Tell the user to keep them out of public repositories.
