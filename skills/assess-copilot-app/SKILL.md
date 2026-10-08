@@ -36,7 +36,7 @@ ecsodus only calls `Describe`, `List`, `Get` and `Lookup` AWS APIs, and never re
     3. **Unprotected addons.** Aurora/RDS, DynamoDB and S3 addons live in a nested stack with no `DeletionPolicy`, so deleting the parent stack deletes the data.
     4. **`aws cloudformation delete-stack --retain-resources` doesn't help.** It only works on stacks already in `DELETE_FAILED`.
 
-    The safe pattern is: retain-patch every resource in every stack (policy-only change sets), import into Terraform, then delete the stacks.
+    The safe pattern is: retain-patch every resource in every stack (policy-only change sets), import into Terraform, then delete the stacks. `DeletionPolicy: Retain` on a `Custom::*` resource stops CloudFormation from invoking its Delete handler at all (verified on real AWS), so when the patched stacks are deleted no handler runs and nothing is deleted; CloudFormation just stops managing the resources. Do not say the handlers still run.
 
     Never suggest deleting a Copilot stack, running `copilot app delete`, `copilot env delete` or `copilot svc delete`, or using `--retain-resources` as a shortcut. If the user asks for any of these, say no, explain the traps above, and offer the safe pattern instead.
 7. If the user wants to proceed, hand over to the `migrate-copilot-to-terraform` skill.

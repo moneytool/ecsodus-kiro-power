@@ -27,7 +27,7 @@ ecsodus generates files and checks results; it never applies Terraform, deletes 
     2. **Protect**: deletion protection and backups for stateful resources.
     3. **Retain patches**: create change sets, gate each with `ecsodus check --changeset ... --manifest ecsodus-manifest.json --stack <stack>`, execute only after approval, then `ecsodus verify-retain`.
     4. **Import into Terraform**: `ecsodus verify-fresh`, then `terraform plan` / `terraform show -json`, gated by `ecsodus check plan-import.json --manifest ecsodus-manifest.json --phase import` (it rejects any create, update, delete or replace). Apply only after approval, then the steady-phase check.
-    5. **Teardown of Copilot stacks**: `ecsodus verify-retain` immediately before each stack delete, in the order the runbook gives.
+    5. **Teardown of Copilot stacks**: `ecsodus verify-retain` immediately before each stack delete, in the order the runbook gives. Because every resource is Retain, CloudFormation never invokes the custom-resource Delete handlers and deletes nothing; it only stops managing the resources.
     6. **Verify**: a final `--phase steady` check must show no changes.
     7. **Never, after migrating**: read the list to the user.
 5. Before each mutating block, show the user the exact commands and the check that guards them, and wait for an explicit "yes".
